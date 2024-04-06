@@ -1,79 +1,60 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Tiny Triangle
+For those of us who spend far too much time working with Vercel, or if you just really want a triangle in your top bar, this is the app for you.
 
-# Getting Started
+Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quick access to your projects, settings, extensions, and notifications.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Step 1: Install Dependencies
 
-## Step 1: Start the Metro Server
+First you need to install your node dependencies. From the _root_ of TinyTriangle, run the following command:
+
+```bash
+bun install
+```
+
+Then to configure the pods dependencies for the native macOS code run:
+
+```bash
+bunx pod-install
+```
+
+## Step 2: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
-To start Metro, run the following command from the _root_ of your React Native project:
+To start Metro, run the following command from the _root_ of TinyTriangle:
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+bun start
 ```
 
-## Step 2: Start your Application
+## Step 3: Start tiny Triangle
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of TinyTriangle and run the following command:
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+bun macos
 ```
 
-### For iOS
+If everything is set up correctly you should see a small triangle appear in your menu bar which will contain a list of your Vercel projects, your account, and more.
 
-```bash
-# using npm
-npm run ios
+### Troubleshooting
 
-# OR using Yarn
-yarn ios
-```
+- Confirm you have node 20 or later installed
+- Confirm you have Xcode installed
+- Make sure you have ruby 3.0.0 or later installed
+- Make sure you have bun installed
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+### Current Issues
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+- Token needs to be manually set in App.tsx
+- Quit does not seem to work reliably
+- jest test fails over MacOS only for MenuBar imports
 
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Future Features
+- Notifications
+- Token set UI
+- Multi account support
+- Better error handling
+- App Icon
+- Prebuilt binaries
+- Eslint Flat Config

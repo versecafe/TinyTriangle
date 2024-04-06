@@ -22,18 +22,6 @@ DerivedData
 *.xcuserstate
 ios/.xcode.env.local
 
-# Android/IntelliJ
-#
-build/
-.idea
-.gradle
-local.properties
-*.iml
-*.hprof
-.cxx/
-*.keystore
-!debug.keystore
-
 # node.js
 #
 node_modules/
@@ -64,3 +52,6 @@ yarn-error.log
 
 # testing
 /coverage
+
+# environment
+.env
