@@ -22,7 +22,12 @@ function MenuBar(): JSX.Element {
   React.useEffect(() => {
     // Insert your Vercel Token Here
     vercel.setToken('');
-    vercel.sync();
+
+    const intervalId = setInterval(() => {
+      vercel.sync();
+    }, 1200000); // 1200000 milliseconds = 20 minutes refresh data periodically
+
+    return () => clearInterval(intervalId);
   }, [vercel]);
 
   return (
@@ -38,9 +43,17 @@ function MenuBar(): JSX.Element {
         <MenuBarExtraItem
           title="GitHub Issues"
           onItemPress={() => {
-            Linking.openURL('https://github.com/versecafe').catch(err =>
-              console.error('An error occurred', err),
-            );
+            Linking.openURL(
+              'https://github.com/versecafe/TinyTriangle/issues',
+            ).catch(err => console.error('An error occurred', err));
+          }}
+        />
+        <MenuBarExtraItem
+          title="Email"
+          onItemPress={() => {
+            Linking.openURL(
+              'mailto:ve.re.ca@protonmail.com?subject=Tiny Triangle Bug Report&body=',
+            ).catch(err => console.error('An error occurred', err));
           }}
         />
       </MenuBarExtraItem>

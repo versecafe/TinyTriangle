@@ -16,8 +16,10 @@ export class Vercel {
   user: Account = {username: '', gitProvider: ''};
   token: string = '';
   organizations: Organization[] = [];
+
   accountSetter: (account: Account) => void;
   orgSetter: (orgs: Organization[]) => void;
+
   constructor(
     accountSetter: (account: Account) => void,
     orgSetter: (orgs: Organization[]) => void,
@@ -28,22 +30,31 @@ export class Vercel {
   }
   async sync() {
     await this.getToken();
-    const userData = await fetch('https://api.vercel.com/v2/user', {
-      headers: {Authorization: `Bearer ${this.token}`},
-    });
-    const teamsData = await fetch('https://api.vercel.com/v2/teams', {
-      headers: {Authorization: `Bearer ${this.token}`},
-    });
-    const teamsJson = await teamsData.json();
-    const userJson = await userData.json();
+
+    // fetch data from Vercel
+    const [userData, teamsData] = await Promise.all([
+      fetch('https://api.vercel.com/v2/user', {
+        headers: {Authorization: `Bearer ${this.token}`},
+      }),
+      fetch('https://api.vercel.com/v2/teams', {
+        headers: {Authorization: `Bearer ${this.token}`},
+      }),
+    ]);
+
+    // parse data
+    const [teams, user] = await Promise.all([
+      teamsData.json(),
+      userData.json(),
+    ]);
+
     this.user = {
-      username: userJson.user.username,
-      gitProvider: userJson.user.importFlowGitProvider,
+      username: user.user.username,
+      gitProvider: user.user.importFlowGitProvider,
     };
     this.accountSetter(this.user);
 
-    if (teamsJson.teams) {
-      const tempOrgs: Organization[] = teamsJson.teams.map(
+    if (teams.teams) {
+      this.organizations = teams.teams.map(
         (team: {id: string; name: string; slug: string}) => ({
           name: team.name,
           teamId: team.id,
@@ -53,7 +64,7 @@ export class Vercel {
       );
 
       (async () => {
-        for (const org of tempOrgs) {
+        for (const org of this.organizations) {
           const projectsData = await fetch(
             `https://api.vercel.com/v9/projects?teamId=${org.teamId}`,
             {
@@ -71,12 +82,12 @@ export class Vercel {
             );
           }
         }
-        console.log('tempOrgs', tempOrgs);
-        this.organizations = tempOrgs;
+        console.log('Data', this.organizations);
+
+        // pass state up to the app
         this.orgSetter(this.organizations);
       })();
     }
-    this.orgSetter(this.organizations);
   }
 
   async setToken(token: string) {
