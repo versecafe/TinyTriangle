@@ -1,6 +1,9 @@
 # Tiny Triangle
 For those of us who spend far too much time working with Vercel, or if you just really want a triangle in your top bar, this is the app for you.
 
+![image](https://github.com/versecafe/TinyTriangle/assets/147033096/3715a3c2-c9cc-472b-99f7-810bd032546e)
+
+
 Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quick access to your projects, settings, extensions, and notifications.
 
 ## Step 1: Install Dependencies
