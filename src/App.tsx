@@ -21,12 +21,11 @@ function MenuBar(): JSX.Element {
 
   React.useEffect(() => {
     // Insert your Vercel Token Here
-    vercel.setToken('');
+    vercel.setToken('N5kcaQ6LkzHX8qaBLeuZ346n');
 
     const intervalId = setInterval(() => {
       vercel.sync();
-    }, 1200000); // 1200000 milliseconds = 20 minutes refresh data periodically
-
+    }, 300000); // 300000 milliseconds = 5 minutes refresh data periodically
     return () => clearInterval(intervalId);
   }, [vercel]);
 
@@ -140,7 +139,11 @@ function MenuBar(): JSX.Element {
         keyEquivalent="r"
         onItemPress={() => {
           console.log('Restart');
-          DevSettings.reload();
+          if (process.env.NODE_ENV === 'development') {
+            DevSettings.reload();
+          } else {
+            vercel.sync();
+          }
         }}
       />
       <MenuBarExtraItem
