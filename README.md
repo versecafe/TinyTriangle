@@ -1,11 +1,35 @@
 # Tiny Triangle
 For those of us who spend far too much time working with Vercel, or if you just really want a triangle in your top bar, this is the app for you.
 
-![image](https://github.com/versecafe/TinyTriangle/assets/147033096/3715a3c2-c9cc-472b-99f7-810bd032546e)
-
+![image](https://github.com/versecafe/TinyTriangle/assets/147033096/a7fcd18f-e50a-473b-9721-8ee10d4576c7)
 
 Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quick access to your projects, settings, extensions, and notifications.
 
+# Features
+
+### Quick Links
+**Organizations;** Base level, Settings, Integrations, & Usage.
+
+**Projects;** Base level, Settings, Analytics, Logs, & Deployments.
+
+**User;** Account Settings *Shift S* & Dashboard *Shift + D*.
+
+### Settings
+**Persistant Config;** Save your preferences across reboots.
+
+**Organization & Project Quick Links;** Configure which if any quick links are shown for projects and organizations.
+
+**Token;** Set your Vercel API Token, currently UI for this is under development.
+
+### Other
+**Auto Sync;** Automatically resync with Vercel every five minutes in the background.
+
+**Restart & Quit;** Simple utilities for restarting or quitting the application on *CMD + R or Q*.
+
+**Bug Reporting;** Quick open to GitHub issues or support email to report issues.
+
+
+# Development
 ## Step 1: Install Dependencies
 
 First you need to install your node dependencies. From the _root_ of TinyTriangle, run the following command:
