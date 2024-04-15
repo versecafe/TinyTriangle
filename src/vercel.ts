@@ -4,6 +4,7 @@ export type Organization = {
   name: string;
   teamId: string;
   url: string;
+  unreadComments: number;
   projects: {name: string}[];
 };
 
@@ -65,6 +66,15 @@ export class Vercel {
 
       (async () => {
         for (const org of this.organizations) {
+          const commentsData = await fetch(
+            `https://vercel.com/api/toolbar/comments/inbox/count?teamId=${org.teamId}`,
+            {
+              headers: {Authorization: `Bearer ${this.token}`},
+            },
+          );
+
+          const commentsJson = await commentsData.json();
+          org.unreadComments = commentsJson.unread;
           const projectsData = await fetch(
             `https://api.vercel.com/v9/projects?teamId=${org.teamId}`,
             {

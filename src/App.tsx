@@ -58,7 +58,12 @@ function MenuBar(): JSX.Element {
   }, [vercel]);
 
   return (
-    <MenubarExtraView icon="triangle.fill">
+    <MenubarExtraView
+      icon={
+        organizations.some(organization => organization.unreadComments > 0)
+          ? 'exclamationmark.triangle'
+          : 'triangle.fill'
+      }>
       <MenuBarExtraItem
         title="Send Bug Report"
         icon="paperplane"
@@ -124,6 +129,7 @@ function MenuBar(): JSX.Element {
           <MenuBarExtraItem
             title={organization.name}
             key={organization.name}
+            icon={organization.unreadComments > 0 ? 'bell.badge' : ''}
             onItemPress={() => {
               Linking.openURL(organization.url).catch(err =>
                 console.error('An error occurred', err),
