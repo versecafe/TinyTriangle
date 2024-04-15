@@ -1,4 +1,5 @@
 # Tiny Triangle
+
 For those of us who spend far too much time working with Vercel, or if you just really want a triangle in your top bar, this is the app for you.
 
 ![image](https://github.com/versecafe/TinyTriangle/assets/147033096/a7fcd18f-e50a-473b-9721-8ee10d4576c7)
@@ -8,13 +9,15 @@ Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quic
 # Features
 
 ### Quick Links
+
 **Organizations;** Base level, Settings, Integrations, & Usage.
 
 **Projects;** Base level, Settings, Analytics, Logs, & Deployments.
 
-**User;** Account Settings *Shift S* & Dashboard *Shift + D*.
+**User;** Account Settings _Shift S_ & Dashboard _Shift + D_.
 
 ### Settings
+
 **Persistant Config;** Save your preferences across reboots.
 
 **Organization & Project Quick Links;** Configure which if any quick links are shown for projects and organizations.
@@ -22,14 +25,17 @@ Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quic
 **Token;** Set your Vercel API Token, currently UI for this is under development.
 
 ### Other
+
 **Auto Sync;** Automatically resync with Vercel every five minutes in the background.
 
-**Restart & Quit;** Simple utilities for restarting or quitting the application on *CMD + R or Q*.
+**Unread Comments;** Icon changes to alert you to any unread comments on your projects and then shows the relevant team with a bell icon.
+
+**Restart & Quit;** Simple utilities for restarting or quitting the application on _CMD + R or Q_.
 
 **Bug Reporting;** Quick open to GitHub issues or support email to report issues.
 
-
 # Development
+
 ## Step 1: Install Dependencies
 
 First you need to install your node dependencies. From the _root_ of TinyTriangle, run the following command:
@@ -78,8 +84,9 @@ If everything is set up correctly you should see a small triangle appear in your
 - jest test fails over MacOS only for MenuBar imports
 
 ### Future Features
-- Notifications
-- Token set UI
+
+- Notifications _partially supported_
+- Token set UI \*
 - Multi account support
 - Better error handling
 - App Icon
