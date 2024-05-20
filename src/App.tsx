@@ -47,7 +47,7 @@ function MenuBar(): JSX.Element {
 
   React.useEffect(() => {
     // Insert your Vercel Token Here
-    vercel.setToken('');
+    vercel.setToken();
     // Apply stored settings to all setters
     settings.sync();
 
@@ -98,7 +98,6 @@ function MenuBar(): JSX.Element {
           title="Change Token"
           onItemPress={async () => {
             console.log('UI Not Implemented Yet');
-            // await vercel.setToken('fdsfda');
           }}
         />
         <MenuBarExtraItem
