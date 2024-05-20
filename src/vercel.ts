@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+var RNFS = require('react-native-fs');
 
 export type Organization = {
   name: string;
@@ -92,7 +93,6 @@ export class Vercel {
             );
           }
         }
-        console.log('Data', this.organizations);
 
         // pass state up to the app
         this.orgSetter(this.organizations);
@@ -100,10 +100,28 @@ export class Vercel {
     }
   }
 
-  async setToken(token: string) {
-    this.token = token;
-    await AsyncStorage.setItem('vercelToken', token);
-    this.sync();
+  async setToken() {
+    RNFS.readDir('/Users/veronica/.config/TinyTriangle') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+      .then((result: any) => {
+        // stat the first file
+        return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+      })
+      .then((statResult: any[]) => {
+        if (statResult[0].isFile()) {
+          // if we have a file, read it
+          return RNFS.readFile(statResult[1], 'utf8');
+        }
+
+        return 'no file';
+      })
+      .then((token: string) => {
+        // log the file contents
+        this.token = token;
+        AsyncStorage.setItem('vercelToken', token).then(() => this.sync());
+      })
+      .catch((err: any) => {
+        console.log(err.message, err.code);
+      });
   }
 
   async getToken() {

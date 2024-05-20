@@ -8,6 +8,14 @@ Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quic
 
 # Features
 
+## Setting your token
+
+Go to `~/.config/TinyTriangle/config.txt` and add your Vercel token to the empty file like so:
+
+```txt
+VGKgqonb4BQed30f3KLcM9dQ
+```
+
 ### Quick Links
 
 **Organizations;** Base level, Settings, Integrations, & Usage.
