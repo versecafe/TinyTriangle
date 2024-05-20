@@ -6,7 +6,7 @@ For those of us who spend far too much time working with Vercel, or if you just 
 
 Tiny triangle is a macOS menu bar app for Vercel, it's designed to give you quick access to your projects, settings, extensions, and notifications.
 
-# Features
+# Using Tiny Triangle
 
 ## Setting your token
 
@@ -15,6 +15,8 @@ Go to `~/.config/TinyTriangle/config.txt` and add your Vercel token to the empty
 ```txt
 VGKgqonb4BQed30f3KLcM9dQ
 ```
+
+# Features
 
 ### Quick Links
 
@@ -87,7 +89,6 @@ If everything is set up correctly you should see a small triangle appear in your
 
 ### Current Issues
 
-- Token needs to be manually set in App.tsx
 - Quit does not seem to work reliably
 - jest test fails over MacOS only for MenuBar imports
 
