@@ -35,15 +35,27 @@ function MenuBar(): JSX.Element {
   const [showOrganizationSettings, setShowOrganizationSettings] =
     React.useState<ControlState>('ON');
 
-  const settings = new Settings({
-    setShowAnalytics,
-    setShowProjectSettings,
-    setShowLogs,
-    setShowDeployments,
-    setShowIntegrations,
-    setShowUsage,
-    setShowOrganizationSettings,
-  });
+  const settings = React.useMemo(
+    () =>
+      new Settings({
+        setShowAnalytics,
+        setShowProjectSettings,
+        setShowLogs,
+        setShowDeployments,
+        setShowIntegrations,
+        setShowUsage,
+        setShowOrganizationSettings,
+      }),
+    [
+      setShowAnalytics,
+      setShowProjectSettings,
+      setShowLogs,
+      setShowDeployments,
+      setShowIntegrations,
+      setShowUsage,
+      setShowOrganizationSettings,
+    ],
+  );
 
   React.useEffect(() => {
     // Insert your Vercel Token Here
@@ -55,7 +67,7 @@ function MenuBar(): JSX.Element {
       vercel.sync();
     }, 300000); // 300000 milliseconds = 5 minutes refresh data periodically
     return () => clearInterval(intervalId);
-  }, [vercel]);
+  }, [vercel, settings]);
 
   return (
     <MenubarExtraView
