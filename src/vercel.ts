@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-var RNFS = require('react-native-fs');
+import AsyncStorage from "@react-native-async-storage/async-storage";
+var RNFS = require("react-native-fs");
 
 export type Organization = {
   name: string;
@@ -15,8 +15,8 @@ export type Account = {
 };
 
 export class Vercel {
-  user: Account = {username: '', gitProvider: ''};
-  token: string = '';
+  user: Account = {username: "", gitProvider: ""};
+  token: string = "";
   organizations: Organization[] = [];
 
   accountSetter: (account: Account) => void;
@@ -26,7 +26,7 @@ export class Vercel {
     accountSetter: (account: Account) => void,
     orgSetter: (orgs: Organization[]) => void,
   ) {
-    console.log('Vercel');
+    console.log("Vercel");
     this.accountSetter = accountSetter;
     this.orgSetter = orgSetter;
   }
@@ -35,10 +35,10 @@ export class Vercel {
 
     // fetch data from Vercel
     const [userData, teamsData] = await Promise.all([
-      fetch('https://api.vercel.com/v2/user', {
+      fetch("https://api.vercel.com/v2/user", {
         headers: {Authorization: `Bearer ${this.token}`},
       }),
-      fetch('https://api.vercel.com/v2/teams', {
+      fetch("https://api.vercel.com/v2/teams", {
         headers: {Authorization: `Bearer ${this.token}`},
       }),
     ]);
@@ -101,7 +101,7 @@ export class Vercel {
   }
 
   async setToken() {
-    RNFS.readDir('/Users/veronica/.config/TinyTriangle') // On Android, use "RNFS.DocumentDirectoryPath" (MainBundlePath is not defined)
+    RNFS.readDir("/Users/veronica/.config/TinyTriangle")
       .then((result: any) => {
         // stat the first file
         return Promise.all([RNFS.stat(result[0].path), result[0].path]);
@@ -109,15 +109,15 @@ export class Vercel {
       .then((statResult: any[]) => {
         if (statResult[0].isFile()) {
           // if we have a file, read it
-          return RNFS.readFile(statResult[1], 'utf8');
+          return RNFS.readFile(statResult[1], "utf8");
         }
 
-        return 'no file';
+        return "no file";
       })
       .then((token: string) => {
         // log the file contents
         this.token = token;
-        AsyncStorage.setItem('vercelToken', token).then(() => this.sync());
+        AsyncStorage.setItem("vercelToken", token).then(() => this.sync());
       })
       .catch((err: any) => {
         console.log(err.message, err.code);
@@ -125,9 +125,9 @@ export class Vercel {
   }
 
   async getToken() {
-    const token = await AsyncStorage.getItem('vercelToken');
+    const token = await AsyncStorage.getItem("vercelToken");
     if (token !== this.token) {
-      this.token = token || '';
+      this.token = token || "";
       this.sync();
     }
   }

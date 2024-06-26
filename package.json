@@ -6,7 +6,8 @@
     "macos": "react-native run-macos",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write ./**/*.{ts,tsx,js}"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
