@@ -1,19 +1,18 @@
-import * as React from 'react';
-
-import {Platform, Linking, BackHandler, DevSettings} from 'react-native';
+import * as React from "react";
+import {Platform, Linking, BackHandler, DevSettings} from "react-native";
 import {
   MenuBarExtraItem,
   MenuBarExtraSeparator,
   MenubarExtraView,
-} from 'react-native-menubar-extra';
-import {Vercel, type Organization, Account} from './vercel';
-import {Settings, type ControlState} from './settings';
+} from "react-native-menubar-extra";
+import {Vercel, type Organization, Account} from "./vercel";
+import {Settings, type ControlState} from "./settings";
 
 function MenuBar(): JSX.Element {
   const [organizations, setOrganizations] = React.useState<Organization[]>([]);
   const [account, setAccount] = React.useState<Account>({
-    username: '',
-    gitProvider: '',
+    username: "",
+    gitProvider: "",
   });
   const vercel = React.useMemo(
     () => new Vercel(setAccount, setOrganizations),
@@ -21,19 +20,19 @@ function MenuBar(): JSX.Element {
   );
 
   // Project settings
-  const [showAnalytics, setShowAnalytics] = React.useState<ControlState>('OFF');
+  const [showAnalytics, setShowAnalytics] = React.useState<ControlState>("OFF");
   const [showProjectSettings, setShowProjectSettings] =
-    React.useState<ControlState>('OFF');
-  const [showLogs, setShowLogs] = React.useState<ControlState>('OFF');
+    React.useState<ControlState>("OFF");
+  const [showLogs, setShowLogs] = React.useState<ControlState>("OFF");
   const [showDeployments, setShowDeployments] =
-    React.useState<ControlState>('OFF');
+    React.useState<ControlState>("OFF");
 
   // Organization settings
   const [showIntegrations, setShowIntegrations] =
-    React.useState<ControlState>('OFF');
-  const [showUsage, setShowUsage] = React.useState<ControlState>('OFF');
+    React.useState<ControlState>("OFF");
+  const [showUsage, setShowUsage] = React.useState<ControlState>("OFF");
   const [showOrganizationSettings, setShowOrganizationSettings] =
-    React.useState<ControlState>('ON');
+    React.useState<ControlState>("ON");
 
   const settings = React.useMemo(
     () =>
@@ -73,8 +72,8 @@ function MenuBar(): JSX.Element {
     <MenubarExtraView
       icon={
         organizations.some(organization => organization.unreadComments > 0)
-          ? 'exclamationmark.triangle'
-          : 'triangle.fill'
+          ? "exclamationmark.triangle"
+          : "triangle.fill"
       }>
       <MenuBarExtraItem
         title="Send Bug Report"
@@ -86,16 +85,16 @@ function MenuBar(): JSX.Element {
           title="GitHub Issues"
           onItemPress={() => {
             Linking.openURL(
-              'https://github.com/versecafe/TinyTriangle/issues',
-            ).catch(err => console.error('An error occurred', err));
+              "https://github.com/versecafe/TinyTriangle/issues",
+            ).catch(err => console.error("An error occurred", err));
           }}
         />
         <MenuBarExtraItem
           title="Email"
           onItemPress={() => {
             Linking.openURL(
-              'mailto:ve.re.ca@protonmail.com?subject=Tiny Triangle Bug Report&body=',
-            ).catch(err => console.error('An error occurred', err));
+              "mailto:ve.re.ca@protonmail.com?subject=Tiny Triangle Bug Report&body=",
+            ).catch(err => console.error("An error occurred", err));
           }}
         />
       </MenuBarExtraItem>
@@ -109,7 +108,7 @@ function MenuBar(): JSX.Element {
         <MenuBarExtraItem
           title="Change Token"
           onItemPress={async () => {
-            console.log('UI Not Implemented Yet');
+            console.log("UI Not Implemented Yet");
           }}
         />
         <MenuBarExtraItem
@@ -117,8 +116,8 @@ function MenuBar(): JSX.Element {
           keyEquivalent="s"
           keyEquivalentModifierMask="SHIFT"
           onItemPress={() => {
-            Linking.openURL('https://vercel.com/account').catch(err =>
-              console.error('An error occurred', err),
+            Linking.openURL("https://vercel.com/account").catch(err =>
+              console.error("An error occurred", err),
             );
           }}
         />
@@ -129,8 +128,8 @@ function MenuBar(): JSX.Element {
         keyEquivalent="d"
         keyEquivalentModifierMask="SHIFT"
         onItemPress={() => {
-          Linking.openURL('https://vercel.com').catch(err =>
-            console.error('An error occurred', err),
+          Linking.openURL("https://vercel.com").catch(err =>
+            console.error("An error occurred", err),
           );
         }}
       />
@@ -140,10 +139,10 @@ function MenuBar(): JSX.Element {
           <MenuBarExtraItem
             title={organization.name}
             key={organization.name}
-            icon={organization.unreadComments > 0 ? 'bell.badge' : ''}
+            icon={organization.unreadComments > 0 ? "bell.badge" : ""}
             onItemPress={() => {
               Linking.openURL(organization.url).catch(err =>
-                console.error('An error occurred', err),
+                console.error("An error occurred", err),
               );
             }}>
             {organization.projects.map(project => {
@@ -153,54 +152,54 @@ function MenuBar(): JSX.Element {
                   key={project.name}
                   onItemPress={() => {
                     Linking.openURL(
-                      organization.url + '/' + project.name,
+                      organization.url + "/" + project.name,
                     ).catch(err =>
                       console.error(
-                        'An error occurred in linking to a project',
+                        "An error occurred in linking to a project",
                         err,
                       ),
                     );
                   }}>
-                  {showProjectSettings === 'ON' ? (
+                  {showProjectSettings === "ON" ? (
                     <MenuBarExtraItem
                       title="Settings"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + '/' + project.name + '/settings',
-                        ).catch(err => console.error('An error occurred', err))
+                          organization.url + "/" + project.name + "/settings",
+                        ).catch(err => console.error("An error occurred", err))
                       }
                     />
                   ) : null}
-                  {showAnalytics === 'ON' ? (
+                  {showAnalytics === "ON" ? (
                     <MenuBarExtraItem
                       title="Analytics"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + '/' + project.name + '/analytics',
-                        ).catch(err => console.error('An error occurred', err))
+                          organization.url + "/" + project.name + "/analytics",
+                        ).catch(err => console.error("An error occurred", err))
                       }
                     />
                   ) : null}
-                  {showLogs === 'ON' ? (
+                  {showLogs === "ON" ? (
                     <MenuBarExtraItem
                       title="Logs"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + '/' + project.name + '/logs',
-                        ).catch(err => console.error('An error occurred', err))
+                          organization.url + "/" + project.name + "/logs",
+                        ).catch(err => console.error("An error occurred", err))
                       }
                     />
                   ) : null}
-                  {showDeployments === 'ON' ? (
+                  {showDeployments === "ON" ? (
                     <MenuBarExtraItem
                       title="Deployments"
                       onItemPress={() =>
                         Linking.openURL(
                           organization.url +
-                            '/' +
+                            "/" +
                             project.name +
-                            '/deployments',
-                        ).catch(err => console.error('An error occurred', err))
+                            "/deployments",
+                        ).catch(err => console.error("An error occurred", err))
                       }
                     />
                   ) : null}
@@ -208,32 +207,32 @@ function MenuBar(): JSX.Element {
               );
             })}
             <MenuBarExtraSeparator />
-            {showIntegrations === 'ON' ? (
+            {showIntegrations === "ON" ? (
               <MenuBarExtraItem
                 title="Integrations"
                 onItemPress={() =>
-                  Linking.openURL(organization.url + '/integrations').catch(
-                    err => console.error('An error occurred', err),
+                  Linking.openURL(organization.url + "/integrations").catch(
+                    err => console.error("An error occurred", err),
                   )
                 }
               />
             ) : null}
-            {showUsage === 'ON' ? (
+            {showUsage === "ON" ? (
               <MenuBarExtraItem
                 title="Usage"
                 onItemPress={() =>
-                  Linking.openURL(organization.url + '/usage').catch(err =>
-                    console.error('An error occurred', err),
+                  Linking.openURL(organization.url + "/usage").catch(err =>
+                    console.error("An error occurred", err),
                   )
                 }
               />
             ) : null}
-            {showOrganizationSettings === 'ON' ? (
+            {showOrganizationSettings === "ON" ? (
               <MenuBarExtraItem
                 title="Settings"
                 onItemPress={() =>
-                  Linking.openURL(organization.url + '/settings').catch(err =>
-                    console.error('An error occurred', err),
+                  Linking.openURL(organization.url + "/settings").catch(err =>
+                    console.error("An error occurred", err),
                   )
                 }
               />
@@ -249,41 +248,41 @@ function MenuBar(): JSX.Element {
         <MenuBarExtraItem title="Projects" onItemPress={() => {}}>
           <MenuBarExtraItem
             title="Show Settings"
-            controlState={showProjectSettings ?? 'OFF'}
+            controlState={showProjectSettings ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowProjectSettings',
-                showProjectSettings === 'OFF' ? 'ON' : 'OFF',
+                "setShowProjectSettings",
+                showProjectSettings === "OFF" ? "ON" : "OFF",
               );
             }}
           />
           <MenuBarExtraItem
             title="Show Analytics"
-            controlState={showAnalytics ?? 'OFF'}
+            controlState={showAnalytics ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowAnalytics',
-                showAnalytics === 'OFF' ? 'ON' : 'OFF',
+                "setShowAnalytics",
+                showAnalytics === "OFF" ? "ON" : "OFF",
               );
             }}
           />
           <MenuBarExtraItem
             title="Show Logs"
-            controlState={showLogs ?? 'OFF'}
+            controlState={showLogs ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowLogs',
-                showLogs === 'OFF' ? 'ON' : 'OFF',
+                "setShowLogs",
+                showLogs === "OFF" ? "ON" : "OFF",
               );
             }}
           />
           <MenuBarExtraItem
             title="Show Deployments"
-            controlState={showDeployments ?? 'OFF'}
+            controlState={showDeployments ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowDeployments',
-                showDeployments === 'OFF' ? 'ON' : 'OFF',
+                "setShowDeployments",
+                showDeployments === "OFF" ? "ON" : "OFF",
               );
             }}
           />
@@ -291,31 +290,31 @@ function MenuBar(): JSX.Element {
         <MenuBarExtraItem title="Organizations" onItemPress={() => {}}>
           <MenuBarExtraItem
             title="Show Settings"
-            controlState={showOrganizationSettings ?? 'OFF'}
+            controlState={showOrganizationSettings ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowOrganizationSettings',
-                showOrganizationSettings === 'OFF' ? 'ON' : 'OFF',
+                "setShowOrganizationSettings",
+                showOrganizationSettings === "OFF" ? "ON" : "OFF",
               );
             }}
           />
           <MenuBarExtraItem
             title="Show Usage"
-            controlState={showUsage ?? 'OFF'}
+            controlState={showUsage ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowUsage',
-                showUsage === 'OFF' ? 'ON' : 'OFF',
+                "setShowUsage",
+                showUsage === "OFF" ? "ON" : "OFF",
               );
             }}
           />
           <MenuBarExtraItem
             title="Show Integrations"
-            controlState={showIntegrations ?? 'OFF'}
+            controlState={showIntegrations ?? "OFF"}
             onItemPress={async () => {
               await settings.set(
-                'setShowIntegrations',
-                showIntegrations === 'OFF' ? 'ON' : 'OFF',
+                "setShowIntegrations",
+                showIntegrations === "OFF" ? "ON" : "OFF",
               );
             }}
           />
@@ -327,7 +326,7 @@ function MenuBar(): JSX.Element {
         keyEquivalentModifierMask="COMMAND"
         keyEquivalent="r"
         onItemPress={() => {
-          if (process.env.NODE_ENV === 'development') {
+          if (process.env.NODE_ENV === "development") {
             DevSettings.reload();
           } else {
             vercel.sync();
@@ -352,7 +351,7 @@ export default function App() {
   return (
     <>
       {/* Display menu bar only on macOS */}
-      {Platform.OS === 'macos' ? <MenuBar /> : null}
+      {Platform.OS === "macos" ? <MenuBar /> : null}
     </>
   );
 }

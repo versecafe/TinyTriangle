@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export type ControlState = 'ON' | 'OFF' | 'MIXED';
+export type ControlState = "ON" | "OFF" | "MIXED";
 
 type SetterFunctions = {
   setShowAnalytics: React.Dispatch<React.SetStateAction<ControlState>>;
