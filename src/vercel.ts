@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 var RNFS = require("react-native-fs");
+import {z} from "zod";
 
 export type Organization = {
   name: string;
@@ -101,26 +102,25 @@ export class Vercel {
   }
 
   async setToken() {
-    RNFS.readDir("/Users/veronica/.config/TinyTriangle")
-      .then((result: any) => {
-        // stat the first file
-        return Promise.all([RNFS.stat(result[0].path), result[0].path]);
+    const tokenValidator = z
+      .string({
+        required_error:
+          "Token is required, make sure you set the token in ~/.config/TinyTriangle/config.txt",
+        invalid_type_error: "Token must be a string",
       })
-      .then((statResult: any[]) => {
-        if (statResult[0].isFile()) {
-          // if we have a file, read it
-          return RNFS.readFile(statResult[1], "utf8");
-        }
+      .length(24, "Token must be exactly 24 characters long");
 
-        return "no file";
-      })
+    RNFS.readFile(
+      RNFS.DocumentDirectoryPath + "/../.config/TinyTriangle/config.txt",
+      "utf8",
+    )
       .then((token: string) => {
-        // log the file contents
+        tokenValidator.parse(token);
         this.token = token;
         AsyncStorage.setItem("vercelToken", token).then(() => this.sync());
       })
       .catch((err: any) => {
-        console.log(err.message, err.code);
+        console.log("Error", err);
       });
   }
 
