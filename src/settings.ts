@@ -24,7 +24,7 @@ export class Settings {
   constructor(setters: SetterFunctions) {
     this.storageSetters = {};
 
-    Object.keys(setters).forEach(key => {
+    Object.keys(setters).forEach((key) => {
       const setterKey = key as keyof SetterFunctions;
       this.storageSetters[setterKey] = async (value: ControlState) => {
         try {

@@ -1,13 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 var RNFS = require("react-native-fs");
-import {z} from "zod";
+import { z } from "zod";
 
 export type Organization = {
   name: string;
   teamId: string;
   url: string;
   unreadComments: number;
-  projects: {name: string}[];
+  projects: { name: string }[];
 };
 
 export type Account = {
@@ -16,7 +16,7 @@ export type Account = {
 };
 
 export class Vercel {
-  user: Account = {username: "", gitProvider: ""};
+  user: Account = { username: "", gitProvider: "" };
   token: string = "";
   organizations: Organization[] = [];
 
@@ -25,7 +25,7 @@ export class Vercel {
 
   constructor(
     accountSetter: (account: Account) => void,
-    orgSetter: (orgs: Organization[]) => void,
+    orgSetter: (orgs: Organization[]) => void
   ) {
     console.log("Vercel");
     this.accountSetter = accountSetter;
@@ -37,10 +37,10 @@ export class Vercel {
     // fetch data from Vercel
     const [userData, teamsData] = await Promise.all([
       fetch("https://api.vercel.com/v2/user", {
-        headers: {Authorization: `Bearer ${this.token}`},
+        headers: { Authorization: `Bearer ${this.token}` },
       }),
       fetch("https://api.vercel.com/v2/teams", {
-        headers: {Authorization: `Bearer ${this.token}`},
+        headers: { Authorization: `Bearer ${this.token}` },
       }),
     ]);
 
@@ -58,12 +58,12 @@ export class Vercel {
 
     if (teams.teams) {
       this.organizations = teams.teams.map(
-        (team: {id: string; name: string; slug: string}) => ({
+        (team: { id: string; name: string; slug: string }) => ({
           name: team.name,
           teamId: team.id,
           url: `https://vercel.com/${team.slug}`,
           projects: [],
-        }),
+        })
       );
 
       (async () => {
@@ -71,8 +71,8 @@ export class Vercel {
           const commentsData = await fetch(
             `https://vercel.com/api/toolbar/comments/inbox/count?teamId=${org.teamId}`,
             {
-              headers: {Authorization: `Bearer ${this.token}`},
-            },
+              headers: { Authorization: `Bearer ${this.token}` },
+            }
           );
 
           const commentsJson = await commentsData.json();
@@ -80,17 +80,17 @@ export class Vercel {
           const projectsData = await fetch(
             `https://api.vercel.com/v9/projects?teamId=${org.teamId}`,
             {
-              headers: {Authorization: `Bearer ${this.token}`},
-            },
+              headers: { Authorization: `Bearer ${this.token}` },
+            }
           );
           const projectsJson = await projectsData.json();
           if (projectsJson.projects) {
             org.projects = projectsJson.projects.map(
-              (project: {name: string}) => {
+              (project: { name: string }) => {
                 return {
                   name: project.name,
                 };
-              },
+              }
             );
           }
         }
@@ -112,7 +112,7 @@ export class Vercel {
 
     RNFS.readFile(
       RNFS.DocumentDirectoryPath + "/../.config/TinyTriangle/config.txt",
-      "utf8",
+      "utf8"
     )
       .then((token: string) => {
         tokenValidator.parse(token);

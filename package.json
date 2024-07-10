@@ -7,7 +7,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "format": "prettier --write ./**/*.{ts,tsx,js}"
+    "format": "prettier --write ./**/*.{ts,tsx,js,mjs,json}"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.23.1",
