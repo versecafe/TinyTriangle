@@ -1,12 +1,12 @@
 import * as React from "react";
-import {Platform, Linking, BackHandler, DevSettings} from "react-native";
+import { Platform, Linking, BackHandler, DevSettings } from "react-native";
 import {
   MenuBarExtraItem,
   MenuBarExtraSeparator,
   MenubarExtraView,
 } from "react-native-menubar-extra";
-import {Vercel, type Organization, Account} from "./vercel";
-import {Settings, type ControlState} from "./settings";
+import { Vercel, type Organization, Account } from "./vercel";
+import { Settings, type ControlState } from "./settings";
 
 function MenuBar(): JSX.Element {
   const [organizations, setOrganizations] = React.useState<Organization[]>([]);
@@ -16,7 +16,7 @@ function MenuBar(): JSX.Element {
   });
   const vercel = React.useMemo(
     () => new Vercel(setAccount, setOrganizations),
-    [],
+    []
   );
 
   // Project settings
@@ -53,7 +53,7 @@ function MenuBar(): JSX.Element {
       setShowIntegrations,
       setShowUsage,
       setShowOrganizationSettings,
-    ],
+    ]
   );
 
   React.useEffect(() => {
@@ -71,30 +71,32 @@ function MenuBar(): JSX.Element {
   return (
     <MenubarExtraView
       icon={
-        organizations.some(organization => organization.unreadComments > 0)
+        organizations.some((organization) => organization.unreadComments > 0)
           ? "exclamationmark.triangle"
           : "triangle.fill"
-      }>
+      }
+    >
       <MenuBarExtraItem
         title="Send Bug Report"
         icon="paperplane"
         keyEquivalent="1"
         keyEquivalentModifierMask="OPTION"
-        onItemPress={() => {}}>
+        onItemPress={() => {}}
+      >
         <MenuBarExtraItem
           title="GitHub Issues"
           onItemPress={() => {
             Linking.openURL(
-              "https://github.com/versecafe/TinyTriangle/issues",
-            ).catch(err => console.error("An error occurred", err));
+              "https://github.com/versecafe/TinyTriangle/issues"
+            ).catch((err) => console.error("An error occurred", err));
           }}
         />
         <MenuBarExtraItem
           title="Email"
           onItemPress={() => {
             Linking.openURL(
-              "mailto:ve.re.ca@protonmail.com?subject=Tiny Triangle Bug Report&body=",
-            ).catch(err => console.error("An error occurred", err));
+              "mailto:ve.re.ca@protonmail.com?subject=Tiny Triangle Bug Report&body="
+            ).catch((err) => console.error("An error occurred", err));
           }}
         />
       </MenuBarExtraItem>
@@ -104,7 +106,8 @@ function MenuBar(): JSX.Element {
         icon="person.fill"
         keyEquivalent="1"
         keyEquivalentModifierMask="SHIFT"
-        onItemPress={() => {}}>
+        onItemPress={() => {}}
+      >
         <MenuBarExtraItem
           title="Change Token"
           onItemPress={async () => {
@@ -116,8 +119,8 @@ function MenuBar(): JSX.Element {
           keyEquivalent="s"
           keyEquivalentModifierMask="SHIFT"
           onItemPress={() => {
-            Linking.openURL("https://vercel.com/account").catch(err =>
-              console.error("An error occurred", err),
+            Linking.openURL("https://vercel.com/account").catch((err) =>
+              console.error("An error occurred", err)
             );
           }}
         />
@@ -128,45 +131,49 @@ function MenuBar(): JSX.Element {
         keyEquivalent="d"
         keyEquivalentModifierMask="SHIFT"
         onItemPress={() => {
-          Linking.openURL("https://vercel.com").catch(err =>
-            console.error("An error occurred", err),
+          Linking.openURL("https://vercel.com").catch((err) =>
+            console.error("An error occurred", err)
           );
         }}
       />
       <MenuBarExtraSeparator />
-      {organizations.map(organization => {
+      {organizations.map((organization) => {
         return (
           <MenuBarExtraItem
             title={organization.name}
             key={organization.name}
             icon={organization.unreadComments > 0 ? "bell.badge" : ""}
             onItemPress={() => {
-              Linking.openURL(organization.url).catch(err =>
-                console.error("An error occurred", err),
+              Linking.openURL(organization.url).catch((err) =>
+                console.error("An error occurred", err)
               );
-            }}>
-            {organization.projects.map(project => {
+            }}
+          >
+            {organization.projects.map((project) => {
               return (
                 <MenuBarExtraItem
                   title={project.name}
                   key={project.name}
                   onItemPress={() => {
                     Linking.openURL(
-                      organization.url + "/" + project.name,
-                    ).catch(err =>
+                      organization.url + "/" + project.name
+                    ).catch((err) =>
                       console.error(
                         "An error occurred in linking to a project",
-                        err,
-                      ),
+                        err
+                      )
                     );
-                  }}>
+                  }}
+                >
                   {showProjectSettings === "ON" ? (
                     <MenuBarExtraItem
                       title="Settings"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + "/" + project.name + "/settings",
-                        ).catch(err => console.error("An error occurred", err))
+                          organization.url + "/" + project.name + "/settings"
+                        ).catch((err) =>
+                          console.error("An error occurred", err)
+                        )
                       }
                     />
                   ) : null}
@@ -175,8 +182,10 @@ function MenuBar(): JSX.Element {
                       title="Analytics"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + "/" + project.name + "/analytics",
-                        ).catch(err => console.error("An error occurred", err))
+                          organization.url + "/" + project.name + "/analytics"
+                        ).catch((err) =>
+                          console.error("An error occurred", err)
+                        )
                       }
                     />
                   ) : null}
@@ -185,8 +194,10 @@ function MenuBar(): JSX.Element {
                       title="Logs"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url + "/" + project.name + "/logs",
-                        ).catch(err => console.error("An error occurred", err))
+                          organization.url + "/" + project.name + "/logs"
+                        ).catch((err) =>
+                          console.error("An error occurred", err)
+                        )
                       }
                     />
                   ) : null}
@@ -195,11 +206,10 @@ function MenuBar(): JSX.Element {
                       title="Deployments"
                       onItemPress={() =>
                         Linking.openURL(
-                          organization.url +
-                            "/" +
-                            project.name +
-                            "/deployments",
-                        ).catch(err => console.error("An error occurred", err))
+                          organization.url + "/" + project.name + "/deployments"
+                        ).catch((err) =>
+                          console.error("An error occurred", err)
+                        )
                       }
                     />
                   ) : null}
@@ -212,7 +222,7 @@ function MenuBar(): JSX.Element {
                 title="Integrations"
                 onItemPress={() =>
                   Linking.openURL(organization.url + "/integrations").catch(
-                    err => console.error("An error occurred", err),
+                    (err) => console.error("An error occurred", err)
                   )
                 }
               />
@@ -221,8 +231,8 @@ function MenuBar(): JSX.Element {
               <MenuBarExtraItem
                 title="Usage"
                 onItemPress={() =>
-                  Linking.openURL(organization.url + "/usage").catch(err =>
-                    console.error("An error occurred", err),
+                  Linking.openURL(organization.url + "/usage").catch((err) =>
+                    console.error("An error occurred", err)
                   )
                 }
               />
@@ -231,8 +241,8 @@ function MenuBar(): JSX.Element {
               <MenuBarExtraItem
                 title="Settings"
                 onItemPress={() =>
-                  Linking.openURL(organization.url + "/settings").catch(err =>
-                    console.error("An error occurred", err),
+                  Linking.openURL(organization.url + "/settings").catch((err) =>
+                    console.error("An error occurred", err)
                   )
                 }
               />
@@ -244,7 +254,8 @@ function MenuBar(): JSX.Element {
       <MenuBarExtraItem
         title="Settings"
         onItemPress={() => {}}
-        icon="gearshape">
+        icon="gearshape"
+      >
         <MenuBarExtraItem title="Projects" onItemPress={() => {}}>
           <MenuBarExtraItem
             title="Show Settings"
@@ -252,7 +263,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowProjectSettings",
-                showProjectSettings === "OFF" ? "ON" : "OFF",
+                showProjectSettings === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -262,7 +273,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowAnalytics",
-                showAnalytics === "OFF" ? "ON" : "OFF",
+                showAnalytics === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -272,7 +283,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowLogs",
-                showLogs === "OFF" ? "ON" : "OFF",
+                showLogs === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -282,7 +293,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowDeployments",
-                showDeployments === "OFF" ? "ON" : "OFF",
+                showDeployments === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -294,7 +305,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowOrganizationSettings",
-                showOrganizationSettings === "OFF" ? "ON" : "OFF",
+                showOrganizationSettings === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -304,7 +315,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowUsage",
-                showUsage === "OFF" ? "ON" : "OFF",
+                showUsage === "OFF" ? "ON" : "OFF"
               );
             }}
           />
@@ -314,7 +325,7 @@ function MenuBar(): JSX.Element {
             onItemPress={async () => {
               await settings.set(
                 "setShowIntegrations",
-                showIntegrations === "OFF" ? "ON" : "OFF",
+                showIntegrations === "OFF" ? "ON" : "OFF"
               );
             }}
           />
