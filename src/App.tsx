@@ -332,7 +332,7 @@ function MenuBar(): JSX.Element {
         </MenuBarExtraItem>
       </MenuBarExtraItem>
       <MenuBarExtraItem
-        title="Restart"
+        title={process.env.NODE_ENV === "development" ? "Restart" : "Refresh"}
         icon="arrow.triangle.2.circlepath"
         keyEquivalentModifierMask="COMMAND"
         keyEquivalent="r"
